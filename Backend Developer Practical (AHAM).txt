@@ -1,0 +1,70 @@
+Backend Developer Practical : Fund Management System
+
+• Objectives
+o The purpose of this assessment is to evaluate the candidate's proficiency as a backend developer with a focus on Python and their understanding of building and working 
+with RESTful APIs. The assessment aims to assess the candidate's ability to design, develop, and maintain scalable and efficient backend solutions for a fund management 
+company.
+
+• Instructions
+o The candidate can use any Integrated Development Environment (IDE) or code editor of their choice.
+o The candidate is allowed to access online resources and documentation during the assessment.
+o The candidate is expected to provide clear and well-structured code.
+o The candidate should comment their code where necessary to explain their thought process. 
+
+• Evaluation Criteria: 
+o Correctness of the code implementation and adherence to the requirements.
+o Code quality, readability, and modularity.
+o Efficient use of Python, SQL, and their libraries.
+o Handling of REST API concepts and best practices.
+o Effective data persistence and error handling.
+o Accuracy and thoroughness of the SQL database schema and migration scripts.
+o Thoroughness and accuracy of the test cases for both API and SQL.
+o Quality and clarity of the overall documentation.
+
+• Submission
+o Please submit your solution by uploading to github/gitlab& share the link.
+Assessment Tasks
+
+
+• Task 1: Data Model Design Create a Python class for representing an investment fund. The class should have the following attributes:
+o Fund ID
+o Fund Name
+o Fund Manager Name
+o Fund Description
+o Fund Net Asset Value (NAV)
+o Fund Date of Creation
+o Fund Performance (as a percentage)
+
+
+• Task 2: REST API Development Using Python and a web framework of your choice (e.g., Flask or Django), create a RESTful API to
+manage investment funds. The API should have the following endpoints
+o Endpoint to retrieve a list of all funds 
+o Endpoint to create a new fund 
+o Endpoint to retrieve details of a specific fund using its ID 
+o Endpoint to update the performance of a fund using its ID 
+o Endpoint to delete a fund using its ID
+
+
+• Task 3: Data Persistence Implement data persistence using a lightweight database system (e.g., SQLite or JSON file). When a new fund 
+is created or the performance of an existing fund is updated, the data should be stored persistently.
+Assessment Tasks
+
+
+• Task 4: SQL Database Schema Design an appropriate database schema to store investment fund data. Create SQL statements to create
+the necessary tables and relationships.
+
+
+• Task 5: SQL Data Migration Write SQL scripts to migrate the data from the lightweight database system (used for Task 3) to the SQL 
+database you designed in Task 4
+
+
+• Task 6: Error Handling Implement appropriate error handling mechanisms for the API to handle scenarios like invalid input, missing 
+resources, etc.
+
+
+• Task 7: Testing Write test cases to ensure the proper functioning of both the API endpoints and the SQL database. The tests should 
+cover various scenarios and edge cases, including testing the SQL queries and verifying data integrity in the database.
+
+
+• Task 8: Documentation Provide clear and concise documentation for the API and the SQL database, including how to interact with each 
+endpoint, SQL schema, and sample requests and responses
