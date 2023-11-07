@@ -1,9 +1,8 @@
 import task1
-from task3 import *
+from task_3_n_4 import *
 from flask import request, jsonify
 
 funds=[]
-
 
 def retrieve_fund():
     #Get all Fund
@@ -58,7 +57,6 @@ def update_fund_id(fund_id):
     data = request.get_json()
     conn = sqlite3.connect('investmentfund.db')
     cursor = conn.cursor()
-    funds = get_fund_id_query(cursor,fund_id)
     conn.commit()
     resp = task1.investment_fund(
         fund_id,
@@ -69,27 +67,24 @@ def update_fund_id(fund_id):
         data['creation_date'],
         data['performance']
     )
-    print(funds)
-    print(type(funds))
-    for row in enumerate(funds):
-        if fund_id in row[0]:
-            update_fund = update_new_fund(cursor,resp)
-            if update_fund == 'Success':
-                get_fund = get_all_fund(cursor)
-                conn.commit()
-                conn.close()
-                return jsonify(get_fund), 200
-            
-            conn.close()
-            return "Error: Update Fund", 404
+
+    update_fund = update_new_fund(cursor,resp)
+    if update_fund == 'Success':
+        funds = get_fund_id_query(cursor,fund_id)
+        conn.commit()
         conn.close()
-        return "Error: Fund not found", 404
+        return jsonify(funds), 200
+    conn.close()
+    return "Error: Update Fund", 404 
 
 def delete_fund_id(fund_id):
     # Delete a fund using its ID
     conn = sqlite3.connect('investmentfund.db')
     cursor = conn.cursor()
-    if fund_id in funds:
-        del funds[fund_id]
-        return "Fund deleted", 204
+    del_fund = delete_fund_query(cursor,fund_id)
+    if del_fund == 'Success':
+        conn.commit()
+        conn.close()
+        return jsonify(f"Fund deleted {fund_id}"), 204
+    conn.close()
     return "Error: Fund not found", 404

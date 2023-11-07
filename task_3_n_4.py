@@ -73,15 +73,12 @@ def create_new_fund(cursor,resp):
             ?, 
             ?
         )""", (resp.fund_id,resp.fund_name,resp.fund_manager,resp.description,resp.nav,resp.creation_date,resp.performance))
-    
-    conn.commit()
-    conn.close()
     return ("Success")
 
 
 def update_new_fund(cursor,resp):
     cursor.execute("""
-        UPDATE invest_fund set(
+        UPDATE invest_fund set
             fund_name = ?, 
             fund_manager = ?, 
             description = ?, 
@@ -90,7 +87,9 @@ def update_new_fund(cursor,resp):
             performance = ?
         WHERE
             fund_id = ?""", (resp.fund_name,resp.fund_manager,resp.description,resp.nav,resp.creation_date,resp.performance,resp.fund_id))
-    
-    conn.commit()
-    conn.close()
     return ("Success")
+
+def delete_fund_query(cursor, resp):
+    cursor.execute("""
+        DELETE FROM invest_fund where fund_id = ?""", (resp,))
+    return "Success"
