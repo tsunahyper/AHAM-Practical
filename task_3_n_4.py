@@ -83,10 +83,9 @@ def update_new_fund(cursor,resp):
             fund_manager = ?, 
             description = ?, 
             nav = ?, 
-            creation_date = ?, 
             performance = ?
         WHERE
-            fund_id = ?""", (resp.fund_name,resp.fund_manager,resp.description,resp.nav,resp.creation_date,resp.performance,resp.fund_id))
+            fund_id = ?""", (resp.fund_name,resp.fund_manager,resp.description,resp.nav,resp.performance,resp.fund_id))
     return ("Success")
 
 def delete_fund_query(cursor, resp):
