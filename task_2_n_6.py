@@ -25,7 +25,7 @@ def create_fund():
         try:
             InsertValidationBaseSchema().load(data)
             if data:
-                resp = task1.investment_fund(
+                resp = task_1.investment_fund(
                     data['create_fund']['fund_id'],
                     data['create_fund']['fund_name'],
                     data['create_fund']['fund_manager'],
@@ -73,7 +73,7 @@ def update_fund_id(fund_id):
         try:
             UpdateValidationBaseSchema().load(data)
             if data:
-                resp = task1.investment_fund(
+                resp = task_1.investment_fund(
                     fund_id,
                     data['update_fund']['fund_name'],
                     data['update_fund']['fund_manager'],

@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint
-from task2 import *
+from task_2_n_6 import *
 app = Flask(__name__)
 
 bp = Blueprint('aham', __name__)
