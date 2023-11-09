@@ -5,52 +5,21 @@ conn = sqlite3.connect('investmentfund.db')
 cursor = conn.cursor()
 
 
-##CREATE TABLE
-# cursor.execute("""CREATE TABLE IF NOT EXISTS invest_fund (
-#             fund_id integer PRIMARY KEY, 
-#             fund_name text, 
-#             fund_manager text, 
-#             description text, 
-#             nav integer, 
-#             creation_date text, 
-#             performance real
-#     )""")
+#CREATE TABLE
+cursor.execute("""CREATE TABLE IF NOT EXISTS invest_fund (
+            fund_id integer PRIMARY KEY, 
+            fund_name text, 
+            fund_manager text, 
+            description text, 
+            nav integer, 
+            creation_date text, 
+            performance real
+    )""")
 
-# conn.commit()
-# conn.close()
+conn.commit()
+conn.close()
 
-##ALTER TABLE ADD FK
-# cursor.execute("""  ALTER TABLE invest_fund
-#                     ADD COLUMN manager_id INTEGER,
-#                     FOREIGN KEY (manager_id) REFERENCES fund_managers(manager_id)
-#                 """)
-# conn.commit()
-# conn.close()
-
-# def insert_dummy_data():
-# cursor.execute(f"""INSERT INTO invest_fund (
-#         fund_id, 
-#         fund_name, 
-#         fund_manager, 
-#         description, 
-#         nav, 
-#         creation_date, 
-#         performance
-#     )
-#         VALUES(
-#             111, 
-#             'RONALDO', 
-#             'JOSE MOURINHO', 
-#             'invest from football club', 
-#             10111, 
-#             '2023-11-07 00:11:14', 
-#             50.1
-#     )""")
-
-# conn.commit()
-# conn.close()
-
-
+# Fetch Fund Data
 def get_all_fund(cursor):
     cursor.execute("""SELECT * FROM invest_fund""")
     return (cursor.fetchall())
@@ -58,7 +27,8 @@ def get_all_fund(cursor):
 def get_fund_id_query(cursor,fund_id):
     cursor.execute(f"""SELECT * FROM invest_fund where fund_id = {fund_id}""")
     return (cursor.fetchall())
-    
+
+# Migrate data from SQLite to SQL (currently using SQLite to insert as an example of db structure)
 def create_new_fund(cursor,resp):
     cursor.execute("""
         INSERT INTO invest_fund (
