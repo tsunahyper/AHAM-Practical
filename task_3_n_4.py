@@ -4,9 +4,8 @@ conn = sqlite3.connect('investmentfund.db')
 
 cursor = conn.cursor()
 
-# current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-# print(current_time)
-# print(type(current_time))
+
+##CREATE TABLE
 # cursor.execute("""CREATE TABLE IF NOT EXISTS invest_fund (
 #             fund_id integer PRIMARY KEY, 
 #             fund_name text, 
@@ -17,6 +16,14 @@ cursor = conn.cursor()
 #             performance real
 #     )""")
 
+# conn.commit()
+# conn.close()
+
+##ALTER TABLE ADD FK
+# cursor.execute("""  ALTER TABLE invest_fund
+#                     ADD COLUMN manager_id INTEGER,
+#                     FOREIGN KEY (manager_id) REFERENCES fund_managers(manager_id)
+#                 """)
 # conn.commit()
 # conn.close()
 
