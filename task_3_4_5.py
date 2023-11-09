@@ -68,4 +68,4 @@ def update_new_fund(cursor,resp):
 def delete_fund_query(cursor, resp):
     cursor.execute("""
         DELETE FROM invest_fund where fund_id = ?""", (resp,))
-    return "Success"
+    return ("Success")

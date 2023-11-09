@@ -15,42 +15,39 @@ def retrieve_fund():
     return jsonify(fetch_all_fund)
 
 def create_fund():
+    data = request.get_json()
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    conn = sqlite3.connect('investmentfund.db')
+    cursor = conn.cursor()
+    
     try:
-        data = request.get_json()
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        InsertValidationBaseSchema().load(data)
+        if data:
+            resp = task_1.create_investment_fund(
+                data['create_fund']['fund_id'],
+                data['create_fund']['fund_name'],
+                data['create_fund']['fund_manager'],
+                data['create_fund']['description'],
+                data['create_fund']['nav'],
+                current_time,
+                data['create_fund']['performance']
+            )
         
-        conn = sqlite3.connect('investmentfund.db')
-        cursor = conn.cursor()
-        
-        try:
-            InsertValidationBaseSchema().load(data)
-            if data:
-                resp = task_1.investment_fund(
-                    data['create_fund']['fund_id'],
-                    data['create_fund']['fund_name'],
-                    data['create_fund']['fund_manager'],
-                    data['create_fund']['description'],
-                    data['create_fund']['nav'],
-                    current_time,
-                    data['create_fund']['performance']
-                )
+            create_fund = create_new_fund(cursor,resp)
             
-                create_fund = create_new_fund(cursor,resp)
-                
-                if create_fund == 'Success':
-                    get_fund = get_all_fund(cursor)
-                    conn.commit()
-                    conn.close()
-                    print(get_fund)
-                    return jsonify(get_fund), 201
+            if create_fund == 'Success':
+                get_fund = get_all_fund(cursor)
+                conn.commit()
                 conn.close()
-                abort({"Error":"Create Fund Error"}), 400
-        
-        except Exception as e:
-            abort({"Error":"Validation Create Fund Error" + e}), 400
+                print(get_fund)
+                return jsonify(get_fund), 201
+            conn.close()
+            abort({"Error":"Create Fund Error"}), 400
+    
     except ValidationError as err:
-        conn.close()
         return jsonify(err.messages), 400
+    
 
 def get_fund_id(fund_id):
     # Retrieve details of a specific fund using its ID
@@ -70,29 +67,26 @@ def update_fund_id(fund_id):
         conn = sqlite3.connect('investmentfund.db')
         cursor = conn.cursor()
         conn.commit()
-        try:
-            UpdateValidationBaseSchema().load(data)
-            if data:
-                resp = task_1.investment_fund(
-                    fund_id,
-                    data['update_fund']['fund_name'],
-                    data['update_fund']['fund_manager'],
-                    data['update_fund']['description'],
-                    data['update_fund']['nav'],
-                    data['update_fund']['performance']
-                )
+        UpdateValidationBaseSchema().load(data)
+        if data:
+            resp = task_1.update_investment_fund(
+                fund_id,
+                data['update_fund']['fund_name'],
+                data['update_fund']['fund_manager'],
+                data['update_fund']['description'],
+                data['update_fund']['nav'],
+                data['update_fund']['performance']
+            )
 
-                update_fund = update_new_fund(cursor,resp)
-                if update_fund == 'Success':
-                    funds = get_fund_id_query(cursor,fund_id)
-                    conn.commit()
-                    conn.close()
-                    return jsonify(funds), 200
+            update_fund = update_new_fund(cursor,resp)
+            if update_fund == 'Success':
+                funds = get_fund_id_query(cursor,fund_id)
+                conn.commit()
                 conn.close()
-                abort({"Error":"Create Fund Error"}), 400 
-        except Exception as e:
-            abort({"Error":"Validation Create Fund Error" + e}), 400
-            
+                return jsonify(funds), 200
+            conn.close()
+            abort({"Error":"Create Fund Error"}), 400 
+                  
     except ValidationError as err:
         conn.close()
         return jsonify(err.messages), 400
@@ -109,6 +103,6 @@ def delete_fund_id(fund_id):
     if del_fund == 'Success':
         conn.commit()
         conn.close()
-        return jsonify(f"Fund deleted {fund_id}"), 204
+        return {"Message": "Success"}, 204
     conn.close()
     abort({"Error":"Delete Fund Error"}), 400 
